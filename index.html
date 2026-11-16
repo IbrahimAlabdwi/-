@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حكاية فايا | The Story of Faya</title>
+    <meta name="description" content="هدية رقمية خاصة بقدوم الأميرة الصغيرة فايا — من عمها أيوم إلى أيمن ومها. بكل الحب.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Aref+Ruqaa:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ====== Canvas Layer (particles + confetti) ====== -->
+    <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+    <!-- ====== Fixed UI (music + controls) ====== -->
+    <div class="fixed-ui">
+        <button id="musicBtn" class="icon-btn" aria-label="تشغيل الموسيقى" title="الموسيقى">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </button>
+        <button id="soundBtn" class="icon-btn" aria-label="المؤثرات الصوتية" title="المؤثرات الصوتية">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+        </button>
+        <button id="shareBtn" class="icon-btn" aria-label="مشاركة الرابط" title="مشاركة الرابط">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
+        </button>
+    </div>
+
+    <!-- ====== Phase 1: Welcome ====== -->
+    <section id="phase-welcome" class="phase active" aria-label="شاشة الاستقبال">
+        <div class="welcome-inner">
+            <div class="crown-badge">
+                <svg viewBox="0 0 64 64" width="56" height="56"><path d="M8 46 L14 20 L26 34 L32 14 L38 34 L50 20 L56 46 Z" fill="currentColor"/><rect x="6" y="46" width="52" height="6" rx="3" fill="currentColor"/></svg>
+            </div>
+            <h1 class="welcome-kicker">A Little Princess Has Arrived</h1>
+            <h2 class="welcome-title">هناك حكاية جديدة بدأت...</h2>
+            <p class="welcome-sub">وشخص صغير جدًا جاء إلى هذا العالم، لكنه يحمل من الفرح ما لا تستطيع الكلمات وصفه.</p>
+            <button id="enterBtn" class="btn btn-gold">ادخل إلى الحكاية ✨</button>
+        </div>
+        <div class="welcome-fade"></div>
+    </section>
+
+    <!-- ====== Phase 2: The Prank ====== -->
+    <section id="phase-prank" class="phase" aria-label="المقلب">
+        <div class="prank-card">
+            <div class="prank-head">
+                <span class="prank-emoji">😄</span>
+                <h2>لحظة يا أيمن!</h2>
+                <p>قبل ما تشوف المفاجأة، لازم تثبت أنك تستحقها!</p>
+            </div>
+
+            <div class="prank-area" id="prankArea">
+                <button id="escapeBtn" class="btn btn-gift">اضغط هنا لاكتشاف المفاجأة 🎁</button>
+                <button id="mercyBtn" class="btn btn-mercy hidden">خلاص يا عم أيوم، ارحمنا 😂</button>
+                <div class="speech-bubble hidden" id="speechBubble" role="status" aria-live="polite"></div>
+            </div>
+        </div>
+        <div class="hint-bubble" id="hintBubble">جرّب تقرب مؤشرك أو إصبعك من الزر... 🤭</div>
+    </section>
+
+    <!-- ====== Phase 3: The Reveal ====== -->
+    <section id="phase-reveal" class="phase reveal-phase" aria-label="الكشف عن فايا">
+        <div class="reveal-content">
+            <p class="reveal-intro" id="revealIntro">إلى أجمل أب وأم... وإلى أجمل هدية أرسلها الله لعائلتنا...</p>
+            <h1 class="faya-name" id="fayaName">فايا</h1>
+            <p class="reveal-welcome" id="revealWelcome">أهلًا بأميرتنا الصغيرة فايا ❤️</p>
+            <div class="reveal-actions">
+                <button id="revealNextBtn" class="btn btn-gold hidden">تابع الحكاية 👇</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Phase 4: Family Congratulation ====== -->
+    <section id="phase-family" class="phase family-phase" aria-label="التهنئة العائلية">
+        <div class="container">
+            <div class="family-letter">
+                <div class="letter-corner letter-corner-tl"></div>
+                <div class="letter-corner letter-corner-br"></div>
+                <span class="letter-tag">تهنئة عائلية</span>
+                <div class="family-text">
+                    <p>أحيانًا تأتي أجمل النعم دون أن نستطيع وصفها بالكلمات...</p>
+                    <p>اليوم لم تستقبلوا طفلة جديدة فقط، بل بدأت معكم حكاية جديدة، وأصبح للحب اسم ووجه صغير...</p>
+                    <p>مبارك لكما قدوم فايا، جعلها الله قرة عينكما، وأنبتها نباتًا حسنًا، وحفظها لكما من كل سوء.</p>
+                    <p>أسأل الله أن يملأ بيتكما بالضحكات، وأن يجعل أيامكما القادمة أجمل مما تتمنيان.</p>
+                </div>
+                <button id="familyNextBtn" class="btn btn-gold">رسالة خاصة من عمها 👶</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Phase 5: Personal Letter ====== -->
+    <section id="phase-letter" class="phase letter-phase" aria-label="الرسالة الشخصية">
+        <div class="container">
+            <h2 class="letter-title">رسالة من القلب</h2>
+            <p class="letter-kicker">بكل الحب... عمك أيوم</p>
+
+            <article class="letter-block" data-reveal>
+                <div class="block-head"><span class="block-icon">👨</span><h3>إلى أخي أيمن</h3></div>
+                <p>أيمن يا أخي،</p>
+                <p>اليوم لم أكتب لك تهنئة فقط، بل أشاركك لحظة من أجمل لحظات حياتك. رأيتك تتغير أمام عيني، من أخي إلى أب، ومن رجل يبحث عن طريقه إلى رجل أصبح هو الطريق لقلب صغير ينتظر الأمان.</p>
+                <p>أعلم أنك ستكون لها السند والأمان والفخر، وأنك ستراها تكبر أمام عينيك وتخطو أول خطواتها، وتقول أول كلماتها، وتحقق أول أحلامها. وأنا على يقين أنك ستصنع لها عالمًا يليق بها.</p>
+                <p>أتمنى أن تعيش كل لحظة منها بقلب ممتلئ، وأن ترى في عينيها كل الفرح الذي تستحقه. فهذا دورك الجديد يا أيمن، وأجمل أدوارك على الإطلاق.</p>
+            </article>
+
+            <article class="letter-block" data-reveal>
+                <div class="block-head"><span class="block-icon">👩</span><h3>إلى مها</h3></div>
+                <p>مها الغالية،</p>
+                <p>ما أجمل أن ترى هذه السعادة في عينيك. لقد وهبك الله أغلى هدية، وستكون فايا مصدر سعادتك وطمأنينتك. أريدك أن تعرفي أن فرحتك بقدومها هي فرحتي، وأن قلبي يشاركك كل لحظة منها.</p>
+                <p>جعل الله فايا قرة عينك، وبارك لكما فيها، وأسعدك بها في الدنيا والآخرة. أنتِ الآن أم، وهذه أجمل صفة في هذه الحياة.</p>
+            </article>
+
+            <article class="letter-block" data-reveal>
+                <div class="block-head"><span class="block-icon">👑</span><h3>إلى فايا</h3></div>
+                <p>يا فايا الصغيرة،</p>
+                <p>قد لا تفهمين هذه الكلمات الآن، لكن عندما تكبرين وتقرئينها، أريدك أن تعرفي أن لك عمًا كان سعيدًا جدًا بقدومك، وأنك امتلكت مكانًا في قلبه منذ اللحظة الأولى التي عرف فيها أنك أصبحت جزءًا من عائلتنا.</p>
+                <p>أعدك يا فايا أن أكون العم الذي يشاركك أفراحك، ويشجعك على كل خطوة، ويفتخر بإنجازاتك، ويكون قريبًا منك دائمًا. سأكون هناك في كل عيد، وكل ذكرى، وكل لحظة سعيدة.</p>
+                <p>وكبرتِ أنتِ وتغيّر العالم، سيبقى لك عم يحبك، وبيت ينتظرك، وقصة ترويها للأجيال القادمة.</p>
+                <p class="letter-prayer">اللهم اجعلها من الصالحات، وبارك لها في عمرها، واجعلها قرة عين لوالديها، واحفظها من كل سوء.</p>
+            </article>
+
+            <div class="letter-signature" data-reveal>
+                <p>بكل الحب والفخر...</p>
+                <p class="sig-name">عمك أيوم ❤️</p>
+                <p class="sig-english">Made with love by Uncle Ayoom</p>
+            </div>
+
+            <div class="letter-actions">
+                <button id="replayBtn" class="btn btn-outline-gold">🔄 إعادة مشاهدة المفاجأة</button>
+                <button id="restartBtn" class="btn btn-outline-gold">↩️ إعادة التجربة من البداية</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Footer ====== -->
+    <footer class="site-footer">
+        <p>من عمها أيوم، إلى أيمن ومها، وإلى أميرتنا الصغيرة فايا... بكل الحب الذي لا تكفيه الكلمات. ❤️</p>
+        <span>Made with love by Uncle Ayoom ❤️</span>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
